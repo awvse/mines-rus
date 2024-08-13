@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Web App</title>
+    <!-- Подключение шрифта Inter ExtraBold из Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('https://i.ibb.co/grQ0Tj7/43434334.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 40px); /* Уменьшены размеры квадратиков */
+            grid-template-rows: repeat(5, 40px); /* Уменьшены размеры квадратиков */
+            gap: 8px; /* Промежуток между квадратиками уменьшен до 8px */
+            position: relative;
+            margin: 0 auto;
+            position: absolute;
+            top: 25%;
+            padding: 10px;
+            border: 5px solid transparent;
+            border-radius: 15px; /* Закругленные края */
+            box-shadow: 0 0 12px #7700ff;
+            overflow: hidden;
+        }
+        .grid-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 5px solid #2701ff;
+            border-radius: 15px; /* Закругленные края */
+            box-sizing: border-box;
+            animation: borderAnimation 4s infinite linear;
+        }
+        @keyframes borderAnimation {
+            0% {
+                clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+            }
+            25% {
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+            50% {
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+            75% {
+                clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+            }
+            100% {
+                clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+            }
+        }
+        .grid-item {
+            width: 40px;
+            height: 40px;
+            background-color: #02c7f8;
+            border-radius: 7px;
+            position: relative;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 40px; /* Размер звезды увеличен */
+            height: 40px; /* Размер звезды увеличен */
+            background: url('https://i.ibb.co/7WwSL4S/image.png') no-repeat center center;
+            background-size: contain;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .star.show-star {
+            animation: fadeIn 0.5s ease-in-out;
+            opacity: 1;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        .hide-item {
+            background-color: transparent;
+            border: none;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            position: absolute;
+            bottom: 10%; /* Поднимаем кнопки немного выше */
+            width: 100%;
+        }
+        .game-button {
+            display: block;
+            width: 65%;
+            max-width: 200px;
+            padding: 15px;
+            background-color: #0094FF;
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .game-button:hover {
+            background-color: #007acc;
+        }
+        .game-button-small {
+            width: 45%;
+            max-width: 200px;
+            padding: 12px;
+            background-color: #0094FF;
+            font-size: 16px;
+        }
+        .game-button-small:hover {
+            background-color: #007acc;
+        }
+        @media (max-width: 640px) {
+            .button-container {
+                bottom: 10%;
+            }
+            .game-button,
+            .game-button-small {
+                max-width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container" id="grid-container">
+        <!-- Создание сетки из квадратиков -->
+        <div class="grid-item"><div class="star" id="star-1"></div></div>
+        <div class="grid-item"><div class="star" id="star-2"></div></div>
+        <div class="grid-item"><div class="star" id="star-3"></div></div>
+        <div class="grid-item"><div class="star" id="star-4"></div></div>
+        <div class="grid-item"><div class="star" id="star-5"></div></div>
+        <div class="grid-item"><div class="star" id="star-6"></div></div>
+        <div class="grid-item"><div class="star" id="star-7"></div></div>
+        <div class="grid-item"><div class="star" id="star-8"></div></div>
+        <div class="grid-item"><div class="star" id="star-9"></div></div>
+        <div class="grid-item"><div class="star" id="star-10"></div></div>
+        <div class="grid-item"><div class="star" id="star-11"></div></div>
+        <div class="grid-item"><div class="star" id="star-12"></div></div>
+        <div class="grid-item"><div class="star" id="star-13"></div></div>
+        <div class="grid-item"><div class="star" id="star-14"></div></div>
+        <div class="grid-item"><div class="star" id="star-15"></div></div>
+        <div class="grid-item"><div class="star" id="star-16"></div></div>
+        <div class="grid-item"><div class="star" id="star-17"></div></div>
+        <div class="grid-item"><div class="star" id="star-18"></div></div>
+        <div class="grid-item"><div class="star" id="star-19"></div></div>
+        <div class="grid-item"><div class="star" id="star-20"></div></div>
+        <div class="grid-item"><div class="star" id="star-21"></div></div>
+        <div class="grid-item"><div class="star" id="star-22"></div></div>
+        <div class="grid-item"><div class="star" id="star-23"></div></div>
+        <div class="grid-item"><div class="star" id="star-24"></div></div>
+        <div class="grid-item"><div class="star" id="star-25"></div></div>
+    </div>
+
+    <div class="button-container">
+        <a href="#" class="game-button" id="get-signal-button">ПОЛУЧИТЬ СИГНАЛ</a>
+        <a href="https://1wanzf.life/casino/play/1play_1play_mines" class="game-button game-button-small" target="_blank">ИГРА ЗДЕСЬ</a>
+    </div>
+
+    <script>
+        function applyMines() {
+            // Сначала скрываем все звезды
+            const allStars = Array.from(document.querySelectorAll('.star'));
+            allStars.forEach(star => star.classList.remove('show-star'));
+
+            // Выбираем случайное количество звезд для показа от 3 до 7
+            const numberOfStarsToShow = Math.floor(Math.random() * 5) + 3; // от 3 до 7 включительно
+
+            // Выбираем случайные звезды
+            const randomIndexes = new Set();
+            while (randomIndexes.size < numberOfStarsToShow) {
+                const randomIndex = Math.floor(Math.random() * allStars.length);
+                randomIndexes.add(randomIndex);
+            }
+
+            // Показываем выбранные звезды с задержкой
+            Array.from(randomIndexes).forEach((index, i) => {
+                setTimeout(() => {
+                    allStars[index].classList.add('show-star');
+                }, i * 300); // Задержка в 300 мс между показом звезд
+            });
+        }
+
+        document.getElementById('get-signal-button').addEventListener('click', applyMines);
+    </script>
+</body>
+</html>
